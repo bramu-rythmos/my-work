@@ -1,0 +1,8 @@
+TO mount network drives
+
+
+mount -t cifs "//128.1.20.47/forerun$" -o username=administrator,password=4RunBrd4,vers=3\.0 /data/Forerun/
+
+mount.cifs //128.1.20.47/forerun$ /data/Forerun/ -o user=administrator,vers=2.1
+
+mount //128.1.20.47/forerun$ -t cifs /data/Forerun/ -o "username=administrator,password=4RunBrd4"

@@ -1,0 +1,305 @@
+vm import policy
+
+
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "s3:GetObject",
+                "s3:ListBucket",
+                "s3:GetBucketLocation"
+            ],
+            "Resource": [
+                "arn:aws:s3:::trailvmsovf",
+                "arn:aws:s3:::trailvmsovf/*"
+            ]
+        },
+        {
+            "Sid": "VisualEditor2",
+            "Effect": "Allow",
+            "Action": [
+                "ec2:CopySnapshot",
+                "ec2:Describe*",
+                "ec2:ModifySnapshotAttribute",
+                "ec2:RegisterImage"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+
+
+
+
+2. vmimport-policy (Permissions policy)
+
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "s3:ListBucket",
+                "s3:GetBucketLocation"
+            ],
+            "Resource": [
+                "arn:aws:s3:::trailvmsovf"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "s3:GetObject"
+            ],
+            "Resource": [
+                "arn:aws:s3:::trailvmsovf/*"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "ec2:ModifySnapshotAttribute",
+                "ec2:CopySnapshot",
+                "ec2:RegisterImage",
+                "ec2:Describe*"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+
+
+
+3. VMImportExportRoleForAWSConnector
+
+
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "s3:ListBucket",
+                "s3:GetBucketLocation",
+                "s3:GetObject"
+            ],
+            "Resource": [
+                "arn:aws:s3:::import-to-ec2-*"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "ec2:ModifySnapshotAttribute",
+                "ec2:CopySnapshot",
+                "ec2:RegisterImage",
+                "ec2:Describe*"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+
+
+
+4. vm import(roles)
+
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "s3:ListBucket",
+                "s3:GetBucketLocation"
+            ],
+            "Resource": [
+                "arn:aws:s3:::trailvmsovf"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "s3:GetObject"
+            ],
+            "Resource": [
+                "arn:aws:s3:::trailvmsovf/*"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "ec2:ModifySnapshotAttribute",
+                "ec2:CopySnapshot",
+                "ec2:RegisterImage",
+                "ec2:Describe*"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+
+INline-policy
+
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "s3:GetObject",
+                "s3:ListBucket",
+                "s3:GetBucketLocation"
+            ],
+            "Resource": [
+                "arn:aws:s3:::trailvmsovf",
+                "arn:aws:s3:::trailvmsovf/*"
+            ]
+        },
+        {
+            "Sid": "VisualEditor2",
+            "Effect": "Allow",
+            "Action": [
+                "ec2:CopySnapshot",
+                "ec2:Describe*",
+                "ec2:ModifySnapshotAttribute",
+                "ec2:RegisterImage"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+
+
+Trust Relationship
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "vmie.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole",
+      "Condition": {
+        "StringEquals": {
+          "sts:ExternalId": "vmimport"
+        }
+      }
+    }
+  ]
+}
+
+
+1. create a role by name VMimport:
+2. create policies like vmimport-policy(policy type-managed policy)  and vmimport(inline policy)
+3. UNder vmimport-policy THe json is below:which gives EC2-list, read, write access and s3-list and read access.
+
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "s3:ListBucket",
+                "s3:GetBucketLocation"
+            ],
+            "Resource": [
+                "arn:aws:s3:::trailvmsovf"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "s3:GetObject"
+            ],
+            "Resource": [
+                "arn:aws:s3:::trailvmsovf/*"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "ec2:ModifySnapshotAttribute",
+                "ec2:CopySnapshot",
+                "ec2:RegisterImage",
+                "ec2:Describe*"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+
+
+4.AFter that give vmimport(policytype-inline policy)
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "s3:GetObject",
+                "s3:ListBucket",
+                "s3:GetBucketLocation"
+            ],
+            "Resource": [
+                "arn:aws:s3:::trailvmsovf",
+                "arn:aws:s3:::trailvmsovf/*"
+            ]
+        },
+        {
+            "Sid": "VisualEditor2",
+            "Effect": "Allow",
+            "Action": [
+                "ec2:CopySnapshot",
+                "ec2:Describe*",
+                "ec2:ModifySnapshotAttribute",
+                "ec2:RegisterImage"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+
+5. AFter the above step go to Trust relationships in vmimport role and give the json as below:
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "vmie.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole",
+      "Condition": {
+        "StringEquals": {
+          "sts:ExternalId": "vmimport"
+        }
+      }
+    }
+  ]
+}
+
+6.
+
+containers.json
+[
+  {
+    "Description": "cyprus OVA",
+    "Format": "ova",
+    "UserBucket": {
+        "S3Bucket": "troyprint-image",
+        "S3Key": "vms/Cypress.cypress_4.0.1_Public_VM.ova"
+    }
+}]
+
+
+
+aws ec2 import-image --description "Windows 10 VMDK" --license-type BYOL --disk-containers file:///containers.json

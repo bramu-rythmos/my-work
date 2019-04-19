@@ -1,0 +1,217 @@
+- check Shmmax: vi /proc/sys/kernel/shmmax
+sysctl -w kernel.shmmax=12884901888
+- check swapspace partition: swapon -s
+vi /etc/sysctl.conf
+vi /proc/sys/vm/nr_hugepages
+
+Check THP status:vi /sys/kernel/mm/transparent_hugepage/enabled
+
+/etc/rc.local
+
+if test -f /sys/kernel/mm/transparent_hugepage/enabled; then
+    echo never > /sys/kernel/mm/transparent_hugepage/enabled
+fi
+- Check Huge pages total: grep HugePages_Total /proc/meminfo
+
+For THP to be disabled on every reboot We need to add one script in /etc/rc.local 
+if test -f /sys/kernel/mm/transparent_hugepage/enabled; then
+    echo never > /sys/kernel/mm/transparent_hugepage/enabled
+fi
+
+iptables -t nat -L -n -v
+
+ps aux | grep wireshark
+
+dumpcap
+
+NAT Rule Addition. 
+iptables -t nat -L -n -v
+
+With Number :
+sudo iptables -t nat --line-numbers -L -n -v | grep 192.168.225
+
+Iptables-restore < /etc/iptables-save
+
+Remove NAT rule:
+iptables -t nat -D POSTROUTING 64
+
+sudo iptables -t nat -A POSTROUTING -s 10.0.2.50 -d 10.150.0.0/24 -j SNAT --to 10.0.7.50
+
+sudo iptables -t nat -A PREROUTING -s 10.150.0.0/24 -d 10.0.7.50 -j DNAT --to 10.0.2.50
+
+/proc/sys/vm/nr_hugepages
+$nohup ping 8.8.8.8 > timeout.txt &
+
+ping host | perl -nle 'print scalar(localtime), " ", $_'
+
+ping 192.168.61.22 | while read pong; do echo "$(date): $pong"; done -w Ping -b filesize:100000 -b files:10
+
+Ping on ok1beta: 6731
+Ping on EDprod01: 26754
+Ping on EDprod04: 28876
+
+-Nagios: 
+/usr/local/nagios/etc/objects
+
+/usr/local/nagios/etc/objects
+
+aws s3 cp test.txt s3://mybucket/test2.txt
+
+For Httpd allow list:
+vi /etc/httpd/conf/httpd.conf
+
+service httpd reload
+
+Add Mount to Linux machine:
+lsblk
+
+mkfs.xfs /dev/xvdp
+
+mkdir /harford
+
+vi /etc/fstab
+
+# Resize the Root partition XFS:
+growpart /dev/sda 1
+xfs_growfs -d /dev/sda1
+Reboot the machine
+
+# edit fstab and add mount for /dev/<drive>
+
+mount -a
+
+df -Th
+
+
+aws s3 cp ardentsistes0908 s3://dbprodbkp/edprod03/ardentsistes0908
+
+aws s3 cp s3://dbprodbkp/ma2beta/meritus0908 meritus0908
+
+aws s3 cp meritus0908 
+aws s3 cp s3://Retained_Databases/stlukes . --recursive
+
+
+aws s3 cp stamford0825 s3:
+
+To check the Incoming Traffic on Linix
+sudo tcpdump -i eth1 icmp and icmp[icmptype]=icmp-echo
+
+sudo tcpdump -nnvvS -i eth1 src 10.254.1.239
+
+tcpdump -s0 -w /tmp/pcap -ni any host 24.106.214.250 &
+
+tcpdump -nr /tmp/pcap | less
+
+tcpdump -ni any host 10.100.57.55
+
+Natestate:
+netstat -tulpn | grep 49104
+
+iptables save and restore:
+iptables-restore < /etc/iptables-save
+iptables-save > /etc/iptables-save
+
+Find a File In Linux:
+
+find . -name *ghost*
+
+--SSH enable:
+vi /etc/ssh/sshd_config.
+
+-- Extend XFS mount:
+xfs_growfs /mount/point
+
+--- S3 mount:
+s3fs -o use_cache=/tmp/cache dbprodbkp /s3mnt
+
+--Sysstat version:
+
+mpstat -V
+
+--- Chnage group of a user in linux:
+usermod -aG cachegrp kbhatt
+
+Change hostname:
+vi /etc/sysconfig/network
+/etc/hosts
+/etc/sysctl.conf
+Put : kernel.hostname = edbeta03
+sysctl -p /etc/sysctl.conf
+reboot
+
+
+#s3mnt:
+
+# echo AKIAISF37XHRBY6VFRNA:razFyKPHgc/XowPZLCXoW6MYllkcuw2RKEC4+VVs > ~/.passwd-s3fs
+# chmod 600 ~/.passwd-s3fs
+# mkdir /tmp/cache
+# mkdir /s3mnt
+# chmod 777 /tmp/cache /s3mnt
+
+# s3fs -o use_cache=/tmp/cache dbprodbkp /s3mnt
+
+#Check status of s3mnt
+
+lsof | grep '/s3mnt'
+
+
+------------------------------------------------------
+for apache:
+C:\Program Files\Apache Software Foundation\Apache2.2\conf\prod-mozart-admin-org-public-portal
+C:\Program Files\Apache Software Foundation\Apache2.2\conf
+httpd.conf on both of the folders,
+and httpd-workers.properties in first folder
+
+---------------------------------------------------------
+Check PID running time :
+ps -o etime= -p "3628"
+
+----------------------------------------------------------
+io top value:
+iotop -aoP
+
+----------------------------------------------------------
+Install the cifs file type: 
+
+yum install samba-client samba-common cifs-utils
+-------------------------------------------------------------
+SSL LAB Greads:
+vi /etc/httpd/conf.d/ssl.conf
+
+SSLHonorCipherOrder on
+SSLCipherSuite ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS
+
+SSLHonorCipherOrder on
+SSLCipherSuite ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS
+
+sudo nano /etc/httpd/conf.d/ssl.conf
+SSLProtocol all -SSLv3 -SSLv2
+---------------------------------------------
+Remove logs in time base:
+find . -mmin +120 -delete
+
+----------------------------------------------------------------------------
+awk '{ print substr( $0, length($0) - 87, length($0) ) }' s3copy.log | grep "app" > test2
+
+----------------------------------------------------------------------------
+
+commands for cifs mount :
+sudo mount -t cifs -o username=administrator,password=3palmtreesoutsidethewindow,uid=9000,gid=9000,file_mode=0777,dir_mode=0777 //10.0.2.82/Source /data/remote/ParadiseInboundFiles
+sudo mount -t cifs -o username=administrator,password=3palmtreesoutsidethewindow,uid=9000,gid=9000,file_mode=0777,dir_mode=0777 //10.0.2.82/Paradise_Outbound_Files /data/remote/ParadiseOutboundFiles
+---------------------------------------------------------------------------
+For sudo permissons:
+vi /etc/sudoers
+
+## Allow root to run any commands anywhere
+agoins ALL=(ALL)   ALL
+
+--------------------------------------------------------------------------------------
+AWS import file.
+aws ec2 import-image --description "CENTOS OVA" --license-type BYOL --disk-containers file:///containers.json
+
+- AWS import status: 
+aws ec2 describe-import-image-tasks --import-task-ids import-ami-03620f00bc2b285ab
+
+AWS export:
+
+aws ec2 create-instance-export-task --instance-id i-08692282136eb2c14 --target-environment vmware \--export-to-s3-task DiskImageFormat=vmdk,ContainerFormat=ova,S3Bucket=troyprint-image,S3Prefix=vms/export-i-08692282136eb2c14.ova
